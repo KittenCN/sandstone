@@ -3,7 +3,7 @@ import torch
 import os
 import torch.nn as nn
 import torch.optim as optim
-from model import VGG11
+from model import VGG11, resnet50
 from tqdm import tqdm
 from torchvision import transforms
 

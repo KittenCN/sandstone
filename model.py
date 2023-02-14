@@ -2,30 +2,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-
-class Net(nn.Module): ## input shape: (batch_size, 1, 150, 150) output shape: (batch_size, 4)
-    def __init__(self):
-        super(Net, self).__init__()
-        self.conv1 = nn.Conv2d(in_channels=1, out_channels=32, kernel_size=3, padding=1)  
-        self.conv2 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding=1) 
-        self.fc1 = nn.Linear(in_features=4 * 148 * 148, out_features=4096)
-        self.fc2 = nn.Linear(in_features=4096, out_features=128)
-        self.fc3 = nn.Linear(in_features=128, out_features=4)
-        self.dropout = nn.Dropout(p=0.5)
-
-    def forward(self, x):
-        x = F.relu(self.conv1(x))  # (batch_size, 32, 150, 150)
-        x = F.max_pool2d(x, 2)  
-        x = F.relu(self.conv2(x))
-        x = F.max_pool2d(x, 2) 
-        x = x.view(-1, 4*148*148)
-        x = F.relu(self.fc1(x))
-        x = F.relu(self.fc2(x))
-        x = self.fc3(x)
-        x = self.dropout(x)
-        x = F.softmax(x, dim=1)
-        return x
-
 class Bottleneck(nn.Module):
     expansion = 4
 
